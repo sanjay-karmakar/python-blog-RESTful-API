@@ -38,5 +38,48 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
 <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
-</body>
-</html>
+{% block scripts %}
+{{ bootstrap.load_js() }}
+<script>
+    function showLoader(message = "Loading...") {
+        document.getElementById("loader-text").textContent = message;
+        document.getElementById("loader-overlay").classList.remove("d-none");
+    }
+</script>
+<!-- SweetAlert2 CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.26.26/sweetalert2.min.js"></script>
+<script>
+    // SweetAlert2 confirmation for all Delete buttons
+    document.querySelectorAll(".delete-button").forEach((btn) => {
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
+            const deleteUrl = this.getAttribute("href");
+            const postTitle = this.getAttribute("data-title") || "this post";
+
+            if (typeof Swal !== "undefined") {
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: `Do you really want to delete "${postTitle}"?`,
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#6c757d",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        showLoader("Deleting movie...");
+                        window.location.href = deleteUrl;
+                    }
+                });
+            } else if (confirm(`Do you really want to delete "${movieTitle}"?`)) {
+                showLoader("Deleting movie...");
+                window.location.href = deleteUrl;
+            }
+        });
+    });
+</script>
+    {%
+        endblock
+    %}
+    </body>
+    </html>

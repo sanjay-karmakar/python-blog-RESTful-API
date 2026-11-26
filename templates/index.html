@@ -30,8 +30,10 @@
                 <!-- TODO: Add code to delete posts below -->
                 <p class="post-meta">
                     Posted by
-                    <a href="#">{{post.author}}</a>
+                    <a href="#">c</a>
                     on {{post.date}}
+                    <a data-title="{{post.title}}" class="delete-button"
+                       href="{{url_for('delete_post', post_id=post.id) }}">✘</a>
                 </p>
             </div>
             <!-- Divider-->
@@ -50,7 +52,24 @@
 
             <!-- Pager-->
             <div class="d-flex justify-content-end mb-4">
-                <a class="btn btn-secondary text-uppercase" href="#!">Older Posts →</a>
+                <!-- Pager-->
+                <div class="d-flex justify-content-between mb-4">
+                    {% if pagination.has_prev %}
+                    <a class="btn btn-secondary text-uppercase" style="margin-right: 20px;"
+                       href="{{ url_for('get_all_posts', page=pagination.prev_num) }}">
+                        ← Newer Posts
+                    </a>
+                    {% else %}
+                    <div></div>
+                    {% endif %}
+
+                    {% if pagination.has_next %}
+                    <a class="btn btn-secondary text-uppercase"
+                       href="{{ url_for('get_all_posts', page=pagination.next_num) }}">
+                        Older Posts →
+                    </a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
