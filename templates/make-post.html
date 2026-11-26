@@ -44,8 +44,8 @@
                     {{ render_field(form.img_url) }}
 
                     <div class="d-flex gap-2 mt-3">
-                        {{ form.submit(class="button") }}
-                        <a href="{{ url_for('get_all_posts') }}" class="button cancel-button">Cancel</a>
+                        {{ form.submit(class="btn btn-primary text-uppercase") }}
+                        <a href="{{ url_for('get_all_posts') }}" class="btn btn-secondary text-uppercase">Cancel</a>
                     </div>
                 </form>
 
